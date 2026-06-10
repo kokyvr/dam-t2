@@ -1,8 +1,10 @@
 package com.example.networkingapisrest.data.repository
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.networkingapisrest.data.room.User
 
 @Dao
@@ -19,5 +21,14 @@ interface UserDAO {
 
     @Query("SELECT * FROM usuarios WHERE usuario = :usuario AND password = :password LIMIT 1")
     suspend fun login(usuario: String, password: String): User?
+
+    @Query("SELECT * FROM usuarios")
+    fun obtenerTodos(): kotlinx.coroutines.flow.Flow<List<User>>
+
+    @Update
+    suspend fun actualizar(user: User)
+
+    @Delete
+    suspend fun eliminar(user: User)
 
 }

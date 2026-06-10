@@ -1,41 +1,34 @@
 package com.example.networkingapisrest.ui.components
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.networkingapisrest.data.model.User
 
+val FondoCard = Color(0xFF2F342F)
+val VerdeCard = Color(0xFF7DD400)
 
 @Composable
 fun UserCard(
     user: User,
     onDetailClick: () -> Unit
 ) {
-    ElevatedCard(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 6.dp
+            .padding(vertical = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = FondoCard
         )
     ) {
         Column(
@@ -45,14 +38,17 @@ fun UserCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Surface(
-                    shape = CircleShape,
-                    tonalElevation = 4.dp
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(44.dp)
+                        .background(VerdeCard, shape = CircleShape)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = null,
-                        modifier = Modifier.padding(12.dp)
+                        tint = FondoCard,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
 
@@ -61,30 +57,43 @@ fun UserCard(
                 Column {
                     Text(
                         text = user.name,
-                        style = MaterialTheme.typography.titleMedium,
+                        color = VerdeCard,
                         fontWeight = FontWeight.Bold
                     )
-
                     Text(
                         text = "@${user.username}",
-                        style = MaterialTheme.typography.bodyMedium
+                        color = VerdeCard.copy(alpha = 0.72f)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            InfoRow(
-                icon = Icons.Default.Email,
-                text = user.email
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = null,
+                    tint = VerdeCard,
+                    modifier = Modifier.size(16.dp)
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = user.email,
+                    color = VerdeCard.copy(alpha = 0.72f)
+                )
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = onDetailClick,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = VerdeCard,
+                    contentColor = FondoCard
+                )
             ) {
-                Text(text = "Ver detalle")
+                Text(text = "Ver detalle", fontWeight = FontWeight.Bold)
             }
         }
     }
